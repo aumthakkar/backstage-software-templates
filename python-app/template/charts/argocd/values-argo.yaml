@@ -1,0 +1,31 @@
+redis-ha:
+  enabled: false
+
+controller:
+  replicas: 1
+
+server:
+  replicas: 1
+
+repoServer:
+  replicas: 1
+
+applicationSet:
+  replicas: 1
+
+# SSL-Passthrough
+# The tls: true option will expect that the argocd-server-tls secret exists as Argo CD server loads TLS certificates from this place.
+
+global:
+  domain: argocd.test.com
+
+certificate:
+  enabled: true
+
+server:
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS" 
+    enabled: true
+    ingressClassName: nginx
+    tls: true
