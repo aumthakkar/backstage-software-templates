@@ -4,7 +4,7 @@ on:
     paths:
         - src/**
     branches:
-        - main # changed this from main as that's the Backstage default branch. Can change it in publish:github action in template.yaml
+        - main
 
 jobs:
   ci:
