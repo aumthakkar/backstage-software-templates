@@ -36,7 +36,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3 # This step clones our argocd synced github repo first before committing to our values.yaml file below
 
-      - name: Update Image tag in argocd monitored charts/${{values.app_name}}/${{values.app_env}}.yaml file on github
+      - name: Update Image tag in argocd monitored charts/${{values.app_name}}/values-${{values.app_env}}.yaml file on github
         shell: bash
         run: |
           echo ${{ '${{needs.ci.outputs.commit_id}}' }}
