@@ -16,7 +16,7 @@ def info():
         'time' : time.ctime(),
         'hostname' : socket.gethostname(),
         'message' : 'You are doing great, Pranav! <3',
-        'deployed_on' : 'kubernetes'
+        'deployed_on' : 'kubernetes',
         'env': '${{values.app_env}}',
         'app_name': '${{values.app_name}}'
     })

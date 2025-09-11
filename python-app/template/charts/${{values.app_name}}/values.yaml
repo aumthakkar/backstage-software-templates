@@ -32,14 +32,14 @@ resources:
   requests:
     cpu: 50m
     memory: 50Mi
-# livenessProbe:
-#   httpGet:
-#     path: /api/v1/healthz
-#     port: http
-# readinessProbe:
-#   httpGet:
-#     path: /api/v1/healthz
-#     port: http
+livenessProbe:
+  httpGet:
+    path: /api/v1/healthz
+    port: http
+readinessProbe:
+  httpGet:
+    path: /api/v1/healthz
+    port: http
 autoscaling:
   enabled: false
   minReplicas: 1
