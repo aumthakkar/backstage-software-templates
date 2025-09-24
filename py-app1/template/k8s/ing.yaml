@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: py-app1
+spec:
+  rules:
+  - host: "py-app1.test.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/api/v1/info"
+        backend:
+          service:
+            name: py-app1
+            port:
+              number: 8080
+  - host: "py-app1.test.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/api/v1/healthz"
+        backend:
+          service:
+            name: py-app1
+            port:
+              number: 8080
