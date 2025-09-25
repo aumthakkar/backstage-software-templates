@@ -1,8 +1,8 @@
 replicaCount: 1
 image:
-  repository: aumthakkar/${{values.app_name}}
+  repository: aumthakkar/${{values.app_name}}-${{values.app_env}}
   pullPolicy: IfNotPresent
-  tag: ${{values.app_name}}-${{values.app_env}}-latest
+  tag: "a3472a"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
@@ -21,7 +21,7 @@ ingress:
   className: "nginx"
   annotations: {}
   hosts:
-    - host: .test.com
+    - host: ${{values.app_name}}-${{values.app_env}}.test.com
       paths:
         - path: /api/v1/info
           pathType: Prefix
