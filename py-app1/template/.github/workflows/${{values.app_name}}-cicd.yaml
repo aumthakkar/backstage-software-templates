@@ -37,7 +37,7 @@ jobs:
     steps:
       - 
         name: Clone your github repo
-        uses: actions/checkout@v3 
+        uses: actions/checkout@v3        
 
       - 
         name: Update the values file from Helm chart to have the right tag
@@ -45,13 +45,13 @@ jobs:
         run: |
           echo ${{ '${{ needs.ci.outputs.commit_id }}' }}
           pip install yq
-          yq -Yi '.image.tag = "${{'${{ needs.ci.outputs.commit_id }}' }}"' charts/${{values.app_name}}/values.yaml
+          yq -Yi '.image.tag = "${{'${{needs.ci.outputs.commit_id}}' }}"' charts/${{values.app_name}}/values-${{values.app_env}}.yaml
 
       - 
         name: Commit the change
         uses: EndBug/add-and-commit@v9
         with:
-          message: 'replace the values.yaml file image tag with ${{ '${{ needs.ci.outputs.commit_id }}' }}'
+          message: 'Updates charts/${{values.app_name}}/${{values.app_env}} with latest docker image push commit ${{ '${{needs.ci.outputs.commit_id}}' }}'
 
       - 
         name: Install ArgoCD application on the runner
@@ -62,7 +62,7 @@ jobs:
           sudo mv ./argocd /usr/local/bin/argocd
 
       - 
-        name: Login to ArgoCD and Sync the app
+        name: Login to ArgoCD and Create the app
         shell: bash
         run: |
           argocd login argocd-server.argocd \
