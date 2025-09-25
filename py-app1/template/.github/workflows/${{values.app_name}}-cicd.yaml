@@ -81,7 +81,7 @@ jobs:
           --revision main \
           --sync-option CreateNamespace=true \
           --sync-policy manual \
-          --repo https://github.com/aum-thakkar/${{values.app_name}}.git \
+          --repo "https://github.com/aum-thakkar/${{values.app_name}}.git" \
           --path charts/${{values.app_name}} \
           --values values.yaml
       
