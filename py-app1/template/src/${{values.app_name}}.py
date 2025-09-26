@@ -12,7 +12,7 @@ def info():
         "time" : time.ctime(),
         "hostname" : socket.gethostname(),
         "message" : "Hey Pranav! You are doing great, little human! <3",
-        "env" : "${{values.app_dev}}",
+        "env" : "${{values.app_env}}",
         "app_name" : "${{values.app_name}}"
     })
 
