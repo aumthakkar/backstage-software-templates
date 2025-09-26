@@ -45,7 +45,7 @@ jobs:
         run: |
           echo ${{ '${{ needs.ci.outputs.commit_id }}' }}
           pip install yq
-          yq -Yi '.image.tag = "${{'${{needs.ci.outputs.commit_id}}' }}"' charts/${{values.app_name}}/values.yaml
+          yq -Yi '.image.tag = "${{'${{needs.ci.outputs.commit_id}}' }}"' charts/${{values.app_name}}/values-${{values.app_env}}.yaml
 
       - 
         name: Commit the change
@@ -75,19 +75,18 @@ jobs:
         shell: bash
         run: |
           # Connects the argocd repo
-          repo="https://github.com/${{'aum-thakkar' | dump }}/${{values.app_name}}.git"
-          argocd repo list | grep -q $repo || argocd repo add $repo
+          repo="https://github.com/aum-thakkar/${{values.app_name}}.git"
+          argocd repo list | grep -q ${repo} || argocd repo add ${repo}
 
           argocd app get ${{values.app_name}} || argocd app create ${{values.app_name}} \
           --dest-namespace ${{values.app_name}} \
           --dest-server https://kubernetes.default.svc \
-          --project default \
           --revision main \
           --sync-option CreateNamespace=true \
           --sync-policy manual \
-          --repo "https://github.com/${{'aum-thakkar' | dump }}/${{values.app_name}}.git" \
+          --repo ${repo}
           --path charts/${{values.app_name}} \
-          --values values.yaml
+          --values values-${{values.app_env}}.yaml
       
       - name: ArgoCD app sync
         shell: bash
