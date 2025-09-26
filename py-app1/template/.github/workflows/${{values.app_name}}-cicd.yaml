@@ -79,7 +79,7 @@ jobs:
           argocd repo list | grep -q ${repo} || argocd repo add ${repo}
 
           argocd app get ${{values.app_name}} || argocd app create ${{values.app_name}} \
-          --dest-namespace ${{values.app_name}} \
+          --dest-namespace ${{values.app_env}} \
           --dest-server https://kubernetes.default.svc \
           --revision main \
           --sync-option CreateNamespace=true \
@@ -92,7 +92,7 @@ jobs:
         shell: bash
         run: | 
           argocd app sync ${{values.app_name}}
-          argocd app wait ${{values.app_name}} --timeout 180
+          argocd app wait ${{values.app_name}} --timeout 60
 
       
     
