@@ -30,7 +30,7 @@ Additionally, the following tokens will have to be created on Github:
 - AUTH_GITHUB_CLIENT_ID (the OAuth Apps Client ID)
 - AUTH_GITHUB_CLIENT_SECRET (OAuth Client secret)
 
-All the above secrets with their values must be configured as environment variables in the backstage k8s deployment file (provided as part of this repo - k8s-app.yaml). 
+**Important:** All the above secrets with their values must be configured as environment variables in the backstage k8s deployment file (provided as part of this repo - k8s-app.yaml).
 - In this repo, just for demo purpose, the values of these environment variables are directly used however, ideally these values should be extracted from secrets (for example Kubernetes secrets or external secret providers such as AWS Secrets Manager etc.)
 
 ### Install PostgreSQL and Kubernetes objects
@@ -49,7 +49,7 @@ Once the Postgres helm chart is installed in the backstage namespace of your Kub
 ```bash
 kubectl apply -f k8s-app.yaml -n backstage
 ```
-The k8s-app.yaml file is included in this repo and consists of k8s deployment, service and ingress objects that are needed to deploy this application.
+The k8s-app.yaml file is included in this repo and consists of k8s deployment, service and ingress objects that are needed to deploy the Backstage Infrastructure part of this application.
  
 The k8s deployment used for this app consists of a Backstage image built by the following Dockerfile:
 
