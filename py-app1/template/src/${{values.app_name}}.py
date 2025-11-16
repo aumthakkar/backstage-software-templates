@@ -12,7 +12,8 @@ def info():
         "time" : time.ctime(),
         "hostname" : socket.gethostname(),
         "app_name" : "${{values.app_name}}",
-        "env" : "${{values.app_env}}"
+        "env" : "${{values.app_env}}",
+        "msg" : "This app has been deployed by Backstage."
     })
 
 @app.route('/api/v1/healthz')

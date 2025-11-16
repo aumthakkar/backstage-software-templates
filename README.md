@@ -110,8 +110,8 @@ CMD ["node", "packages/backend", "--config", "app-config.yaml", "--config", "app
 In this case, to run the Backstage app,  https://backstage.test.com has been defined. However, as this is not an actual DNS name, its entry has to be configured in the /etc/hosts file of your computer as below:
 
 **/etc/hosts** file:
-127.0.0.1  localhost
-127.0.0.1 backstage.test.com
+- 127.0.0.1  localhost
+- 127.0.0.1 backstage.test.com
 
 Doing the above, will allow to run and control this Backstage deployment from your browser.
 
@@ -140,14 +140,14 @@ Doing the above, will allow to run and control this Backstage deployment from yo
 
 This will now create the Python Flask application on your Kubernetes Cluster.
 
-### Test the Application
+## Test the Application
 
 - For instance if you have selected "py-app-1" as your Component name and "dev" as your environment, then the application name will formulate to be "py-app-1-dev.test.com"
     - In order to access this application from your browser, as there is no DNS name configured for this app, you will have to first modify the "/etc/hosts" file of your computer to have an entry for this link mapped to the localhost value as shown below:
     
         **/etc/hosts** file:
-        127.0.0.1  localhost
-        127.0.0.1 backstage.test.com
-        127.0.0.1 py-app-1-dev.test.com
+        - 127.0.0.1  localhost
+        - 127.0.0.1 backstage.test.com
+        - 127.0.0.1 py-app-1-dev.test.com
 
 - Then on your browser type py-app-1-dev.test.com/api/v1/info and you will get the Python Flask app display the following:
