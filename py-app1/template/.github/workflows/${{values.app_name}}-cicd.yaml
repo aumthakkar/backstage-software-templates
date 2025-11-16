@@ -1,10 +1,16 @@
 name: ${{values.app_name}}-cicd
 on:
   push:
+    branches:
+      - main
     paths:
       - src/**
+  pull_request:
     branches:
-      - main     
+      - main
+    paths:
+      - src/**
+  workflow_dispatch:
 
 jobs:
   ci:
@@ -92,7 +98,7 @@ jobs:
         shell: bash
         run: | 
           argocd app sync ${{values.app_name}}
-          argocd app wait ${{values.app_name}} --timeout 60
+          argocd app wait ${{values.app_name}} --timeout 120
 
       
     

@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: backstage
+  name: backstage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backstage
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: backstage
+    spec:
+      containers:
+      - image: aumthakkar/backstage:v1
+        name: backstage
+        ports:
+        - containerPort: 7007
+        env:
+        - name: POSTGRES_HOST
+          value: psql-postgresql
+        - name: POSTGRES_USER
+          value: <your_postgres_username>
+        - name: POSTGRES_PASSWORD
+          value: <your_postgres_user_password>
+        - name: AUTH_GITHUB_CLIENT_ID
+          value: <your_auth_github_client_id>
+        - name: AUTH_GITHUB_CLIENT_SECRET
+          value: <your_auth_github_client_secret>
+        - name: GITHUB_TOKEN
+          value: <your_github_token> 
+        - name: APP_CONFIG_app_baseUrl
+          value: https://backstage.test.com
+        - name: APP_CONFIG_backend_baseUrl
+          value: https://backstage.test.com
+        resources: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: backstage
+  name: backstage
+spec:
+  ports:
+  - port: 7007
+    protocol: TCP
+    targetPort: 7007
+  selector:
+    app: backstage
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: backstage
+spec:
+  rules:
+  - host: "backstage.test.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: backstage
+            port:
+              number: 7007
