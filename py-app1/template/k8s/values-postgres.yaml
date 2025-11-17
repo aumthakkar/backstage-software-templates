@@ -1,9 +1,9 @@
 global:
   postgresql:
     auth:
-      postgresPassword: "<your_postgres_password>"
-      username: "<your_postgres_username>"
-      password: "<your_postgres_user_password>"
+      postgresPassword: "backstage"
+      username: "backstage"
+      password: "backstage"
       database: "backstage"
 
 
