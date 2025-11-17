@@ -16,7 +16,7 @@ spec:
         app: backstage
     spec:
       containers:
-      - image: aumthakkar/backstage:v1
+      - image: aumthakkar/backstage_production:v1
         name: backstage
         ports:
         - containerPort: 7007
