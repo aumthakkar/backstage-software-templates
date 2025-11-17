@@ -42,7 +42,7 @@ helm install psql bitnami/postgresql --version 15.5.28 --create-namespace -n bac
 The **values-postgres.yaml** file used in the command above is included in this repo in the k8s folder.
 
 
-Once the Postgres helm chart is installed in the backstage namespace of your Kubernetes cluster, first update the values of the environment variables in your k8s deployment part (in the **k8s-app.yaml** file)  and then apply that **k8s-app.yaml** file  into the backstage namespace of your Kubernetes cluster as below:
+Once the Postgres helm chart is installed in the backstage namespace of your Kubernetes cluster, **first update the values of the environment variables in your k8s deployment part** of the **k8s-app.yaml** file  and then apply that **k8s-app.yaml** file  into the **backstage** namespace of your Kubernetes cluster as below:
 
 ```bash
 kubectl apply -f k8s-app.yaml -n backstage
