@@ -36,8 +36,8 @@ https://github.com/actions/actions-runner-controller/blob/master/docs/quickstart
 Now install PostgreSQL helm chart in your Kubernetes cluster as below:
 
 ```bash
-- helm repo add bitnami https://charts.bitnami.com/bitnami
-- helm install psql bitnami/postgresql --version 15.5.28 --create-namespace -n backstage -f values-postgres.yaml
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm install psql bitnami/postgresql --version 15.5.28 --create-namespace -n backstage -f values-postgres.yaml
 ```
 The **values-postgres.yaml** file used in the command above is included in this repo in the k8s folder.
 
