@@ -18,7 +18,7 @@ https://github.com/actions/actions-runner-controller/blob/master/docs/quickstart
 		
 		- Whilst creating the runnerdeployment.yaml file using the steps in the above link, if the repository was specified as your local repo where this backstage-software-templates repo has been forked, then change the spec.template.spec.repository argument to be spec.tempate.spec.organization and provide the name of your github organization as the value for that argument. 
 		
-- Then create the following secrets in your GitHub Actions **Organizations repo**:
+- Then create the following secrets in your GitHub **Organizations repo**:
 - DOCKERHUB_USERNAME
 - DOCKERHUB_TOKEN
 - ARGOCD_PASSWORD
