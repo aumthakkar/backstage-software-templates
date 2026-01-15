@@ -87,14 +87,14 @@ jobs:
 
           # Delete argocd app first if exists to start afresh.
           if argocd app get ${{ values.app_name }} >/dev/null 2>&1; then
-                        echo "Deleting old re-iteration of ${{ values.app_name }} app first to start afresh."
-                        argocd app delete ${{ values.app_name }} --cascade --yes --wait
+            echo "Deleting old re-iteration of ${{ values.app_name }} app first to start afresh."
+            argocd app delete ${{ values.app_name }} --cascade --yes --wait
 
-                        while argocd app get ${{ values.app_name }} >/dev/null 2>&1; do
-                            echo "Waiting for argocd app: '${{ values.app_name }}' to be deleted..."
-                            sleep 2
-                        done
-                    fi
+            while argocd app get ${{ values.app_name }} >/dev/null 2>&1; do
+              echo "Waiting for argocd app: '${{ values.app_name }}' to be deleted..."
+              sleep 2
+            done
+          fi
           
           # Create argocd app.
           argocd app create ${{values.app_name}} \
