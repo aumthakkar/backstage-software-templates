@@ -16,19 +16,18 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Login to Docker Hub
+      - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ '${{ secrets.DOCKERHUB_USERNAME }}' }}
           password: ${{ '${{ secrets.DOCKERHUB_TOKEN }}' }}
-      -
-        name: Shorten github commit_id
+
+      - name: Shorten github commit_id
         shell: bash
         run: |
           echo "COMMIT_ID=${GITHUB_SHA::6}" >> ${GITHUB_ENV}
-      -
-        name: Build and push
+
+      - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -42,34 +41,36 @@ jobs:
     needs: ci
     runs-on: self-hosted
     steps:
-      - 
-        name: Clone your github repo
-        uses: actions/checkout@v3        
+      - name: Clone your github repo
+        uses: actions/checkout@v3
 
-      - 
-        name: Update the values file from Helm chart to have the right tag
+      - name: Install yq utility to update tag in values.yaml
+        run: |
+          sudo apt update && sudo apt install python3-pip -y
+          pip install yq --break-system-packages
+          echo ${{ '${{ needs.ci.outputs.commit_id }}' }}
+          yq -Yi '.image.tag = "${{ '${{ needs.ci.outputs.commit_id }}' }}"' charts/${{ values.app_name }}/values-${{ values.app_env }}.yaml
+
+      - name: Update values file from Helm chart to have the right tag
         shell: bash
         run: |
           echo ${{ '${{ needs.ci.outputs.commit_id }}' }}
           pip install yq
           yq -Yi '.image.tag = "${{'${{needs.ci.outputs.commit_id}}' }}"' charts/${{values.app_name}}/values-${{values.app_env}}.yaml
 
-      - 
-        name: Commit the change
+      - name: Commit the change
         uses: EndBug/add-and-commit@v9
         with:
           message: "Updates charts/${{values.app_name}}/${{values.app_env}} with latest docker image push commit ${{ '${{needs.ci.outputs.commit_id}}' }}"
 
-      - 
-        name: Install ArgoCD application on the runner
+      - name: Install ArgoCD application on the runner
         shell: bash
         run: |
           curl -ksSL -o argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
           chmod +x argocd
           sudo mv ./argocd /usr/local/bin/argocd
 
-      - 
-        name: Login to ArgoCD and Create the app
+      - name: Login to ArgoCD and Create the app
         shell: bash
         run: |
           argocd login argocd-server.argocd \
